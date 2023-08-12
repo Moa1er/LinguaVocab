@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocab_language_tester/services/vocab_list_service.dart';
 import '../classes/word.dart';
+import 'package:vocab_language_tester/utils/utils.dart';
 
 class AddVocabPage extends StatefulWidget {
   const AddVocabPage({super.key});
@@ -13,21 +14,51 @@ class _AddVocabPageState extends State<AddVocabPage> {
   VocabListService vocabListService = VocabListService();
   TextEditingController foreignWordController = TextEditingController();
   TextEditingController translationController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
-  bool isText(String input) {
-    final RegExp regex = RegExp(r'^[a-zA-Z]+$');
+  bool isTextOrSpace(String input) {
+    //only letters and spaces accepted
+    final RegExp regex = RegExp(r'^[A-Za-z\s]+$');
+    return regex.hasMatch(input);
+  }
+
+  bool isDescriGoodFormat(String input) {
+    //everything accepted exept ";" and ","
+    final RegExp regex = RegExp(r'[^;,]+');
     return regex.hasMatch(input);
   }
 
   void _submitVocabulary() async {
     String foreignWord = foreignWordController.text;
     String translation = translationController.text;
+    String description = descriptionController.text;
 
-    if (!isText(foreignWord) || !isText(translation)) {
-      // Show an error Snackbar if the input contains numbers or special characters.
+    if(foreignWord.isEmpty || translation.isEmpty){
+      // Show an error snackbar if the input is empty
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please enter text only in the input boxes.'),
+          content: Text("Please enter something for the word and it's translation."),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+    if (!isTextOrSpace(foreignWord) || !isTextOrSpace(translation)) {
+      // Show an error snackbar if the input contains numbers or special characters.
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please enter text and space only in the input boxes for the word and it's translation."),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    if (!isDescriGoodFormat(description)) {
+      // Show an error snackbar if the input contains numbers or special characters.
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please do not enter commas and/or semi-colons in the description."),
           duration: Duration(seconds: 2),
         ),
       );
@@ -41,9 +72,10 @@ class _AddVocabPageState extends State<AddVocabPage> {
           foreignVersion: foreignWord.toLowerCase(),
           transVersion: translation.toLowerCase(),
           tags: vocabListService.tagsForChosenWord,
+          description: description,
       );
     vocabListService.wordList.add(newWord);
-    await vocabListService.writeVocabInFile(newWord);
+    await writeVocabInFile(newWord);
 
     // Show a success Snackbar.
     ScaffoldMessenger.of(context).showSnackBar(
@@ -89,6 +121,13 @@ class _AddVocabPageState extends State<AddVocabPage> {
               controller: translationController,
               decoration: const InputDecoration(
                 labelText: 'Translation',
+              ),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: descriptionController,
+              decoration: const InputDecoration(
+                labelText: 'Description (can be empty)',
               ),
             ),
             const SizedBox(height: 24),

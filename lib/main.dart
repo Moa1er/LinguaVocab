@@ -6,10 +6,11 @@ import 'package:vocab_language_tester/pages/vocab_list_page.dart';
 import 'package:vocab_language_tester/pages/vocab_testing_page.dart';
 import 'package:vocab_language_tester/services/vocab_list_service.dart';
 import 'package:vocab_language_tester/utils/utils.dart';
+import 'package:vocab_language_tester/constants/constants.dart';
 
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,39 +21,23 @@ void main() async {
 }
 
 Future<void> checkAndCreateFile() async {
-  // Get the application documents directory
-  Directory appDocumentsDirectory = await getApplicationDocumentsDirectory();
-  // Define the file path
-  String filePath = "${appDocumentsDirectory.path}/wordList.txt";
 
-  // Check if the file exists
-  bool fileExists = await File(filePath).exists();
+  //Test for when file is empty
+  // String testString =
+  //     "jeruk,orange,indonesian;fruits,simple description\n"
+  //     "apel,apple,indonesian;test,\n"
+  //     "suka,like,indonesian;verbs,vraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big descriptionvraiment big description\n";
+  // String testStringChatGpt = "eat, makan, indonesian; verb, To consume food.\nbook, buku, indonesian; noun, A written or printed work consisting of pages glued or sewn together along one side.\nrun, lari, indonesian; verb, To move at a speed faster than walking.\ntree, pohon, indonesian; noun, A woody perennial plant with a single main stem or trunk.\ndrink, minum, indonesian; verb, To consume a liquid.\nsing, nyanyi, indonesian; verb, To produce musical sounds with the voice.\ncar, mobil, indonesian; noun, A vehicle with four wheels, typically propelled by an internal combustion engine.\nswim, berenang, indonesian; verb, To move through water by using one's body.\ndog, anjing, indonesian; noun, A domesticated carnivorous mammal that typically has a long snout, an acute sense of smell, and a barking, howling, or whining voice.\nwrite, menulis, indonesian; verb, To mark (letters, words, or other symbols) on a surface.\ncat, kucing, indonesian; noun, A small domesticated carnivorous mammal with soft fur, a short snout, and retractile claws.\njump, melompat, indonesian; verb, To push oneself off a surface and into the air using one's legs.\ncomputer, komputer, indonesian; noun, An electronic device for storing and processing data.\nsleep, tidur, indonesian; verb, To rest in a state of suspended consciousness.\nhouse, rumah, indonesian; noun, A building for human habitation.\ndance, menari, indonesian; verb, To move rhythmically to music.\nflower, bunga, indonesian; noun, The seed-bearing part of a plant, consisting of reproductive organs (stamens and carpels) that are typically surrounded by brightly colored petals and a green calyx.\nwork, kerja, indonesian; verb, To perform tasks to achieve a purpose or goal.\nfriend, teman, indonesian; noun, A person with whom one has a bond of mutual affection.";
+  // File file = await writeCounter(testStringChatGpt, nameForLexiqueFile);
 
-  if (!fileExists) {
-    // If the file does not exist, create it
-    File file = File(filePath);
-    await file.create();
+  //For when file is not empty
+  String folderPath = await getLocalPath();
+  File file = File('$folderPath/$nameForLexiqueFile');
 
-    print("File created at: $filePath");
-  } else {
-    File file = File(filePath);
-    // file.writeAsString(
-    //     "jeruk,orange,indonesian;fruits\n"
-    //     "apel,apple,indonesian;test\n"
-    //     "suka,like,indonesian;verbs\n");
-    // file.writeAsString(
-    //     "jeruk,orange,fruits\n"
-    //     "apel,apple,indonesian\n"
-    //     "suka,like,verbs\n");
-    // used to start clean
-    // await file.delete();
-    // File file2 = File(filePath);
-    String fileContent = await file.readAsString();
+  String fileContent = await file.readAsString();
 
-    // Do something with the file content
-    print("File content: $fileContent");
-    print("File already exists at: $filePath");
-  }
+  // Do something with the file content
+  print("File content: $fileContent");
 }
 
 class MyApp extends StatelessWidget {

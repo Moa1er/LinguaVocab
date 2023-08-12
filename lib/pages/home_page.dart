@@ -135,6 +135,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _toVocabTestingPage() {
+    print("_toVocabTestingPage");
     vocabListService.wordListForTest = vocabListService.wordList;
     Navigator.pushNamed(context, "/vocab-testing-page");
   }

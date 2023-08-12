@@ -1,8 +1,8 @@
 import '../classes/word.dart';
-
+import 'package:vocab_language_tester/constants/constants.dart';
+import 'package:vocab_language_tester/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 
 class VocabListService with ChangeNotifier {
   static final VocabListService _vocabListService = VocabListService._internal();
@@ -17,13 +17,6 @@ class VocabListService with ChangeNotifier {
   }
 
   VocabListService._internal() {
-    print("initializeing");
-    // wordList = [
-    //   Word(foreignVersion: 'Bonjour', transVersion: 'Hello', tags: ['greeting', 'formal', 'noun', 'animal', 'test', 'long']),
-    //   Word(foreignVersion: 'Chat', transVersion: 'Cat', tags: ['noun', 'animal']),
-    //   Word(foreignVersion: 'Livre', transVersion: 'Book', tags: ['noun']),
-    //   // Add more items as needed
-    // ];
     // Iterate through each Word in the wordList
     updateExistingTags();
   }
@@ -36,16 +29,18 @@ class VocabListService with ChangeNotifier {
     }
   }
 
+  void deleteWord(Word wordToDelete) {
+    wordList.removeWhere((word) =>
+      word.foreignVersion == wordToDelete.foreignVersion &&
+      word.transVersion == wordToDelete.transVersion
+    );
+  }
+
   readVocabInFile() async{
     try {
-      // Get the application documents directory
-      Directory appDocumentsDirectory = await getApplicationDocumentsDirectory();
-
-      // Define the file path
-      String filePath = "${appDocumentsDirectory.path}/wordList.txt";
-
+      String folderPath = await getLocalPath();
       // Read the file lines
-      File file = File(filePath);
+      File file = File('$folderPath/$nameForLexiqueFile');
       List<String> lines = await file.readAsLines();
 
       // Process each line
@@ -54,97 +49,59 @@ class VocabListService with ChangeNotifier {
         int idxForeiWord = 0;
         int idxTrandWord = 1;
         int idxTags = 2;
+        int idxDescription = 3;
         wordList.add(
             Word(
                 foreignVersion: wordAttributes[idxForeiWord],
                 transVersion: wordAttributes[idxTrandWord],
-                tags: wordAttributes[idxTags].split(';').toSet()
+                tags: wordAttributes[idxTags].split(';').toSet(),
+                description: wordAttributes[idxDescription],
             )
         );
-        existingTags.addAll(wordAttributes[idxTags].split(';'));
+
+        if(wordAttributes[idxTags].isNotEmpty){
+          existingTags.addAll(wordAttributes[idxTags].split(';'));
+        }
       }
     } catch (e) {
       print("Error reading file: $e");
     }
   }
-  writeVocabInFile(Word word) async{
-    try {
-      // Get the application documents directory
-      Directory appDocumentsDirectory = await getApplicationDocumentsDirectory();
 
-      // Define the file path
-      String filePath = "${appDocumentsDirectory.path}/wordList.txt";
-
-      // Read the file lines
-      File file = File(filePath);
-      IOSink sink = file.openWrite(mode: FileMode.append);
-
-      sink.writeln("${word.foreignVersion},${word.transVersion},${word.tags.join(";")}");
-
-      // Close the file
-      await sink.close();
-    } catch (e) {
-      print("Error reading file: $e");
-    }
-  }
-
-  Future<void> deleteLineFromFileFromString(String foreignWord) async {
-    // Get the application documents directory
-    Directory appDocumentsDirectory = await getApplicationDocumentsDirectory();
-    // Define the file path
-    String filePath = "${appDocumentsDirectory.path}/wordList.txt";
-
-    File file = File(filePath);
-
-    if (!await file.exists()) {
-      throw Exception('File does not exist');
-    }
-
-    List<String> lines = await file.readAsLines();
-
-    int idxForeignWord = 0;
-    int lineNumber = -1;
-    for (int i = 0; i < lines.length; i++) {
-      if (lines[i].split(',')[idxForeignWord] == foreignWord) {
-        lineNumber = i;
-        break;
-      }
-    }
-
-    if (lineNumber < 0 || lineNumber >= lines.length) {
-      throw Exception('Invalid line number');
-    }
-
-    lines.removeAt(lineNumber);
-
-    await file.writeAsString(lines.join('\n'));
-  }
-
-  Future<void> writeLineToFile(int lineNumber, String content) async {
-    // Get the application documents directory
-    Directory appDocumentsDirectory = await getApplicationDocumentsDirectory();
-
-    // Define the file path
-    String filePath = "${appDocumentsDirectory.path}/wordList.txt";
-
-    File file = File(filePath);
-
-    if (!await file.exists()) {
-      throw Exception('File does not exist');
-    }
-
-    List<String> lines = await file.readAsLines();
-
-    if (lineNumber < 0 || lineNumber >= lines.length) {
-      throw Exception('Invalid line number');
-    }
-
-    lines[lineNumber] = content;
-
-    await file.writeAsString(lines.join('\n'));
+  void createWordListForTest(List<String> selectedTags){
+    print("createWordListForTest");
+    filterWordsByTags(selectedTags);
+    addReverseWord();
   }
 
   void filterWordsByTags(List<String> selectedTags) {
+    print("filterWordsByTags");
     wordListForTest = wordList.where((word) => word.tags.every((tag) => selectedTags.contains(tag))).toList();
+
+    print("TAGS");
+    for(Word word in wordListForTest){
+      print(word.foreignVersion);
+      print(word.tags);
+    }
+    print("selectedTags: ");
+    print(selectedTags);
+    print("wordListForTest: ");
+    print(wordListForTest);
+    print("wordList: ");
+    print(wordList);
+  }
+
+  void addReverseWord(){
+    print("addReverseWord");
+    List<Word> wordListForTestReversed = [];
+    for(Word word in wordListForTest){
+      wordListForTestReversed.add(Word(
+        foreignVersion: word.transVersion,
+        transVersion: word.foreignVersion,
+        tags: word.tags,
+        description: word.description,
+      ));
+    }
+    wordListForTest += wordListForTestReversed;
   }
 }

@@ -45,7 +45,7 @@ class _TagSelectionPageState extends State<TagSelectionPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          vocabListService.filterWordsByTags(selectedTags);
+          vocabListService.createWordListForTest(selectedTags);
           if(vocabListService.wordListForTest.isEmpty){
             showDialog(
               context: context,

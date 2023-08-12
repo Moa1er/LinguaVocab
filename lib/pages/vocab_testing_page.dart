@@ -16,14 +16,14 @@ class _VocabTestingPageState extends State<VocabTestingPage> {
   VocabListService vocabListService = VocabListService();
 
   List<Word> remainingWords = [];
-  Word currentWord = Word(foreignVersion: '', transVersion: '', tags: {});
+  Word currentWord = Word(foreignVersion: '', transVersion: '', tags: {}, description: '');
   TextEditingController answerController = TextEditingController();
   Color backgroundColor = Colors.white;
   bool showNextButton = false;
 
   void _checkAnswer() {
     String userAnswer = answerController.text;
-    if (userAnswer.toLowerCase() == currentWord.transVersion.toLowerCase()) {
+    if (userAnswer.replaceAll(' ', '').toLowerCase() == currentWord.transVersion.replaceAll(' ', '').toLowerCase()) {
       setState(() {
         backgroundColor = Colors.green;
         showNextButton = true;
@@ -37,6 +37,7 @@ class _VocabTestingPageState extends State<VocabTestingPage> {
   }
 
   void _getNextWord() {
+    print("_getNextWord");
     setState(() {
       backgroundColor = Colors.white;
       showNextButton = false;
@@ -46,10 +47,19 @@ class _VocabTestingPageState extends State<VocabTestingPage> {
   }
 
   void _getRandomWord() {
+    print("_getRandomWord");
     if (remainingWords.isEmpty) {
+      print("remainingWords.isEmpty");
       remainingWords.addAll(vocabListService.wordListForTest);
       remainingWords.shuffle();
+
+      for(Word word in remainingWords){
+        print(word.foreignVersion);
+        print(word.tags);
+      }
     }
+
+
 
     setState(() {
       currentWord = remainingWords.removeAt(0);
@@ -63,6 +73,7 @@ class _VocabTestingPageState extends State<VocabTestingPage> {
         builder: (context) => const TagSelectionPage(),
       ),
     );
+    remainingWords = [];
     _getRandomWord();
   }
 
@@ -108,11 +119,26 @@ class _VocabTestingPageState extends State<VocabTestingPage> {
               child: Text(showNextButton ? 'Next' : 'Submit Answer'),
             ),
             const SizedBox(height: 16),
-            if (backgroundColor == Colors.red)
+            if (backgroundColor == Colors.red)...[
               Text(
                 'Correct translation: ${currentWord.transVersion}',
-                style: const TextStyle(color: Colors.black),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
               ),
+              const SizedBox(height: 16),
+            ],
+            if((backgroundColor == Colors.red || backgroundColor == Colors.green) && currentWord.description.isNotEmpty)...[
+              Text(
+                'More info: ${currentWord.description}',
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.justify,
+              ),
+            ],
           ],
         ),
       ),
