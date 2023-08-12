@@ -54,7 +54,7 @@ class _AddVocabPageState extends State<AddVocabPage> {
       return;
     }
 
-    if (!isDescriGoodFormat(description)) {
+    if (!isDescriGoodFormat(description) && description.isNotEmpty) {
       // Show an error snackbar if the input contains numbers or special characters.
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -91,6 +91,7 @@ class _AddVocabPageState extends State<AddVocabPage> {
     // Clear the input fields after submission.
     foreignWordController.clear();
     translationController.clear();
+    descriptionController.clear();
   }
 
   void refresh() {

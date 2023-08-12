@@ -35,9 +35,6 @@ class _AddingTagPageState extends State<AddingTagPage> {
         vocabListService.tagsForChosenWord.add(newTag);
         vocabListService.existingTags.add(newTag);
         Navigator.pop(context);
-        // Actualises the list but we don't rly need it actually..
-        // filteredTags = List.from(vocabListService.existingTags);
-        // searchController.clear();
       });
     }
   }

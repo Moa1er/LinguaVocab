@@ -34,6 +34,11 @@ Future<void> checkAndCreateFile() async {
   String folderPath = await getLocalPath();
   File file = File('$folderPath/$nameForLexiqueFile');
 
+  bool fileExist = await file.exists();
+  if(!fileExist){
+    await file.create();
+  }
+
   String fileContent = await file.readAsString();
 
   // Do something with the file content

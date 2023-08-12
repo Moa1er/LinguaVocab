@@ -28,7 +28,7 @@ MaterialColor createMaterialColor(Color color) {
 
 Future<String> getExternalDocumentPath() async {
   // To check whether permission is given for this app or not.
-  var status = await Permission.storage.status;
+  var status = await Permission.manageExternalStorage.request();
   if (!status.isGranted) {
     // If not we will ask for permission first
     await Permission.storage.request();
