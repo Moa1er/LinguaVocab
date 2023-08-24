@@ -29,14 +29,34 @@ class _AddingTagPageState extends State<AddingTagPage> {
     });
   }
 
+  bool isTagGoodFormat(String input) {
+    //everything accepted exept ";" and ","
+    final RegExp regex = RegExp(r'[^;,]+');
+    return regex.hasMatch(input);
+  }
+
   void _addNewTag(String newTag) {
-    if (newTag.isNotEmpty && !vocabListService.existingTags.contains(newTag)) {
-      setState(() {
-        vocabListService.tagsForChosenWord.add(newTag);
-        vocabListService.existingTags.add(newTag);
-        Navigator.pop(context);
-      });
+    if (newTag.isEmpty) {
+      return;
     }
+    if (!isTagGoodFormat(newTag)) {
+      // Show an error snackbar if the input contains numbers or special characters.
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Please do not enter commas and/or semi-colons in the tag."),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    setState(() {
+      vocabListService.tagsForChosenWord.add(newTag);
+    });
+    if(!vocabListService.existingTags.contains(newTag)){
+      vocabListService.existingTags.add(newTag);
+    }
+    Navigator.pop(context);
   }
 
   @override

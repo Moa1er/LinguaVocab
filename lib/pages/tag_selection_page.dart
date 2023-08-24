@@ -66,6 +66,7 @@ class _TagSelectionPageState extends State<TagSelectionPage> {
               }
             );
           }else{
+            selectedTags.sort();
             Navigator.pop(context, selectedTags);
           }
         },

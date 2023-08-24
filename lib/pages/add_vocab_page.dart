@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:vocab_language_tester/services/vocab_list_service.dart';
 import '../classes/word.dart';
-import 'package:vocab_language_tester/utils/utils.dart';
+import 'package:vocab_language_tester/utils/file_manager.dart';
 
 class AddVocabPage extends StatefulWidget {
-  const AddVocabPage({super.key});
+  final Word wordPassed;
+  final bool fromVocabList;
+
+  // const AddVocabPage({super.key});
+  const AddVocabPage(
+      {
+        Key? key,
+        required this.wordPassed,
+        required this.fromVocabList,
+      }) : super(key: key);
 
   @override
   State<AddVocabPage> createState() => _AddVocabPageState();
@@ -65,6 +74,13 @@ class _AddVocabPageState extends State<AddVocabPage> {
       return;
     }
 
+    //if the word is from the list of vocabulary it means it is an update but in this case,
+    //we delete the old one and replace with a new word
+    //TODO change the way and just modify the line in itself ?
+    if(widget.fromVocabList){
+      await vocabListService.deleteWord(widget.wordPassed);
+    }
+
     // Do something with the entered vocabulary, e.g., save it to a database or display it.
     // You can add your custom logic here.
     Word newWord =
@@ -74,16 +90,9 @@ class _AddVocabPageState extends State<AddVocabPage> {
           tags: vocabListService.tagsForChosenWord,
           description: description,
       );
+
     vocabListService.wordList.add(newWord);
     await writeVocabInFile(newWord);
-
-    // Show a success Snackbar.
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Vocabulary added !'),
-        duration: Duration(seconds: 2),
-      ),
-    );
 
     vocabListService.tagsForChosenWord = {};
     refresh();
@@ -92,6 +101,18 @@ class _AddVocabPageState extends State<AddVocabPage> {
     foreignWordController.clear();
     translationController.clear();
     descriptionController.clear();
+
+    if(widget.fromVocabList){
+      Navigator.pop(context);
+    }else{
+      // Show a success Snackbar.
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Vocabulary added !'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   void refresh() {
@@ -102,6 +123,12 @@ class _AddVocabPageState extends State<AddVocabPage> {
 
   @override
   Widget build(BuildContext context) {
+    if(widget.fromVocabList){
+      foreignWordController.text = widget.wordPassed.foreignVersion;
+      translationController.text = widget.wordPassed.transVersion;
+      descriptionController.text = widget.wordPassed.description;
+      vocabListService.tagsForChosenWord = widget.wordPassed.tags;
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Adding custom vocabulary'),
@@ -159,7 +186,7 @@ class _AddVocabPageState extends State<AddVocabPage> {
             const SizedBox(height: 24),
             ElevatedButton(
                 onPressed: _submitVocabulary,
-                child: const Text('Add new word'),
+                child: Text(widget.fromVocabList ? "Modify word" : "Add new word"),
             ),
           ],
         ),

@@ -1,8 +1,8 @@
 import '../classes/word.dart';
-import 'package:vocab_language_tester/constants/constants.dart';
-import 'package:vocab_language_tester/utils/utils.dart';
+import 'package:vocab_language_tester/utils/file_manager.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
+import '../globals/globals.dart' as globals;
 
 class VocabListService with ChangeNotifier {
   static final VocabListService _vocabListService = VocabListService._internal();
@@ -29,18 +29,9 @@ class VocabListService with ChangeNotifier {
     }
   }
 
-  void deleteWord(Word wordToDelete) {
-    wordList.removeWhere((word) =>
-      word.foreignVersion == wordToDelete.foreignVersion &&
-      word.transVersion == wordToDelete.transVersion
-    );
-  }
-
   readVocabInFile() async{
     try {
-      String folderPath = await getLocalPath();
-      // Read the file lines
-      File file = File('$folderPath/$nameForLexiqueFile');
+      File file = File(globals.lexiqueFilePath);
       List<String> lines = await file.readAsLines();
 
       // Process each line
@@ -77,18 +68,6 @@ class VocabListService with ChangeNotifier {
   void filterWordsByTags(List<String> selectedTags) {
     print("filterWordsByTags");
     wordListForTest = wordList.where((word) => word.tags.every((tag) => selectedTags.contains(tag))).toList();
-
-    print("TAGS");
-    for(Word word in wordListForTest){
-      print(word.foreignVersion);
-      print(word.tags);
-    }
-    print("selectedTags: ");
-    print(selectedTags);
-    print("wordListForTest: ");
-    print(wordListForTest);
-    print("wordList: ");
-    print(wordList);
   }
 
   void addReverseWord(){
@@ -103,5 +82,11 @@ class VocabListService with ChangeNotifier {
       ));
     }
     wordListForTest += wordListForTestReversed;
+  }
+
+  Future<void> deleteWord(Word wordToDel) async {
+    await deleteWordFromFile(wordToDel);
+    wordList.remove(wordToDel);
+    updateExistingTags();
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:vocab_language_tester/classes/word.dart';
 import 'package:vocab_language_tester/services/vocab_list_service.dart';
 
+import 'add_vocab_page.dart';
+
 class VocabListPage extends StatefulWidget {
   const VocabListPage({super.key});
 
@@ -66,12 +68,15 @@ class _VocabListPageState extends State<VocabListPage> {
                         },
                         child: const Text('Description/Tags'),
                       ),
-                      const SizedBox(width: 5),
-                      IconButton(
-                        onPressed: () {
-                          _showDeleteConfirmationDialog(context, word);
+                      const SizedBox(width: 10),
+                      GestureDetector(
+                        onTapDown: (TapDownDetails details) async {
+                          await _showPopupMenu(
+                              details.globalPosition,
+                              word,
+                          );
                         },
-                        icon: const Icon(Icons.delete),
+                        child: const Icon(Icons.more_vert),
                       ),
                     ],
                   ),
@@ -81,6 +86,49 @@ class _VocabListPageState extends State<VocabListPage> {
           ),
         ],
       ),
+    );
+  }
+
+  _showPopupMenu(Offset offset, Word word) async {
+    double left = offset.dx;
+    double top = offset.dy;
+    await showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(left, top, 0, 0),
+      items: [
+        //this weird code is used bc PopupMenuItem calls a navigator.pop so it pop our
+        //alertDialog. With this timer the dialog appear correctly
+        PopupMenuItem<String>(
+            onTap: () {
+              setState(() {
+                Future.delayed(
+                    const Duration(seconds: 0),
+                        () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => AddVocabPage(
+                            wordPassed: word,
+                            fromVocabList: true,
+                          ))).then((value) => setState(() {}));
+                    }
+                );
+              });
+          },
+          value: 'Modify',
+          child: const Text('Modify')
+        ),
+        //this weird code is used bc PopupMenuItem calls a navigator.pop so it pop our
+        //alertDialog. With this timer the dialog appear correctly
+        PopupMenuItem<String>(
+          onTap: () {
+            Future.delayed(
+              const Duration(seconds: 0),
+              () => {_showDeleteConfirmationDialog(context, word)}
+            );
+          },
+          value: 'Delete',
+          child: const Text('Delete'),
+        ),
+      ],
+      elevation: 8.0,
     );
   }
 
@@ -154,7 +202,9 @@ class _VocabListPageState extends State<VocabListPage> {
             ElevatedButton(
               onPressed: () {
                 Navigator.pop(context);
-                deleteWord(wordToDel);
+                setState(() {
+                  vocabListService.deleteWord(wordToDel);
+                });
               },
               child: const Text('Delete'),
             ),
@@ -162,13 +212,5 @@ class _VocabListPageState extends State<VocabListPage> {
         );
       },
     );
-  }
-
-  void deleteWord(Word wordToDel) async {
-    await deleteWordFromFile(wordToDel);
-    setState(() {
-      vocabListService.deleteWord(wordToDel);
-      vocabListService.updateExistingTags();
-    });
   }
 }
