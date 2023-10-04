@@ -1,0 +1,175 @@
+membuat,make,indonesian;verb,
+melihat,see,indonesian;verb,look
+melempar,throw,indonesian;verb,
+memberi,give,verb;indonesian,
+membayar,pay,indonesian;verb,
+membuka,open,verb;indonesian,
+membantu,help,indonesian;verb,
+membangun,build,indonesian;verb,
+memjual,sell,indonesian;verb,
+memcoba,try,indonesian;verb,
+mencari,looking for,indonesian;verb,
+menjadi,become,indonesian;verb,get
+mendorong,push,indonesian;verb,boost
+mendapat,receive,indonesian;verb,get
+menjaga,protect,indonesian;verb,guard
+mendengar,hear,indonesian;verb,
+memilih,choose,indonesian;verb,
+memanggil,call,indonesian;verb,
+memesan,order,indonesian;verb,reserve
+menurut,obey,indonesian;verb,follow
+menarik,pull,indonesian;verb,interesting
+menolak,refuse,indonesian;verb,decline / object
+menunggu,wait,indonesian;verb,
+menerima,receive,indonesian;verb,get / accept (gift from someone)
+menutup,close,indonesian;verb,shut
+mengerti,understand,indonesian;verb,
+mengingat,remember,indonesian;verb,
+mengajar,teach,indonesian;verb,
+mengambil,take,indonesian;verb,make
+mengisi,fill,indonesian;verb,
+mengubah,change,indonesian;verb,transform
+menghilang,disappear,indonesian;verb,gone / missing
+menghadap,face,indonesian;verb,verb
+mengganggu,bother,indonesian;verb,disturb
+menggali,dig,indonesian;verb,
+mengganti,change,indonesian;verb,replace
+menggambar,draw,indonesian;verb,
+menyapu,sweep,indonesian;verb,
+menyapa,greet,indonesian;verb,say
+menyewa,rent,indonesian;verb,
+menyentuh,touch,indonesian;verb,
+menyusun,arrange,indonesian;verb,
+mengandung,pregnant,indonesian;verb,contains / have
+mengejar,chase,indonesian;verb,after
+mengirim,send,indonesian;verb,
+menyanyi,sing,indonesian;verb,
+menyala,light,indonesian;verb,light up / lit
+merawat,to look after,indonesian;verb,to take care of
+merusak,damage,indonesian;verb,break / spoil
+nul,zero,indonesian;number,
+satu,one,indonesian;number,
+dua,two,indonesian;number,
+tiga,three,indonesian;number,
+empat,four,indonesian;number,
+lima,five,indonesian;number,
+enam,six,indonesian;number,
+tujuh,seven,indonesian;number,
+delapan,eight,indonesian;number,
+sembilan,nine,indonesian;number,
+sepulu,ten,indonesian;number,
+sebelas,eleven,indonesian;number,
+dua belas,twelve,indonesian;number,
+nomor,number,indonesian;number,
+lusin,dozen,indonesian;number,
+tiga puluh,thirty,indonesian;number,
+juta,million,indonesian;number,
+ribu,thousand,indonesian;number,
+ratus,hundred,indonesian;number,
+kedua,second,indonesian;number,
+pertama,first,indonesian;number,
+miliar,bilion,indonesian;number,
+garu,new,indonesian;noun,
+betul,correct,indonesian;noun,true / right (logically)
+banyak,a lot of,indonesian;noun,much / good deal
+hangat,warm,indonesian;noun,
+kecil,small,indonesian;noun,little
+dingin,cold,indonesian;noun,
+sedikit,few,indonesian;noun,a little bit
+tua,old,indonesian;noun,
+jelek,ugly,indonesian;noun,
+panjang,long,indonesian;noun,length 
+pendek,short,indonesian;noun,
+cantik,pretty,indonesian;noun,beautiful
+tinggi,tall,indonesian;noun,height / high
+jauh,far,indonesian;noun,away
+jelas,clear,indonesian;noun,
+sangat,very,indonesian;noun,highly / extremely
+dekat,nearby,indonesian;noun,near / close
+kotor,dirty,indonesian;noun,
+miskin,poor,indonesian;noun,
+bersih,clean,indonesian;noun,
+sulit,hard,indonesian;noun,difficult
+pintar,smart,indonesian;noun,bright / clever
+sempurna,perfect,indonesian;noun,
+mudah,easy,indonesian;noun,simple / convenient 
+rusak,damaged,indonesian;noun,broken / out of order
+bodoh,stupid,indonesian;noun,dumb
+biasa,ordinary,indonesian;noun,normal / common
+lain,different,indonesian;noun,other / another
+sedih,sad,indonesian;noun,
+bahagia,happy,indonesian;noun,
+mirip,ressemble,indonesian;noun,similar
+penuh,full,indonesian;noun,whole
+kemaran,yesterday,indonesian;noun,
+cara,way of doing it,indonesian;noun,
+masak,cook,indonesian;verb,
+gampang,easy,indonesian;noun,
+adu,ouch,indonesian;noun,
+langit,sky,indonesian;noun,
+bunga,flower,indonesian;noun,
+nyenyak,rest well,indonesian;noun,
+tambah,plus,indonesian;number,add
+kurang,minus,indonesian;number,less
+kali,times,indonesian;number,multipled
+menyimpan,keep,indonesian;verb,store
+gelap,dark,indonesian;adjective,
+buruk,bad,indonesian;adjective,negative
+indah,beautiful,indonesian;adjective,pretty / lovely (for a place not a person)
+tampan,handsome,indonesian;adjective,
+baik,good,indonesian;adjective,well
+terang,bright,indonesian;adjective,light / clear
+nakal,naughty,indonesian;adjective,bad boy/girl
+sederhana,simple,indonesian;adjective,modest
+berat,heavy,indonesian;adjective,weight
+ringan,light,indonesian;adjective,(weight)
+ramah,friendly,indonesian;adjective,amiable / kind
+rumit,complicated ,indonesian;adjective,
+cukup,enough ,indonesian;adjective,quite / sufficient 
+umum,public,indonesian;adjective,
+ragu,doubtful,indonesian;adjective,uncertain / hesitate
+lebih,more,indonesian;adjective,past
+mantap,steady,indonesian;adjective,
+khusus,special,indonesian;adjective,only
+lucu,funny,indonesian;adjective,cute
+jahat,evil,indonesian;adjective,bad
+kering,dry,indonesian;adjective,
+serius,serious,indonesian;adjective,
+bagus,good,indonesian;adjective,nice
+basah,wet,indonesian;adjective,
+sebentar,in a moment,indonesian;adjective,a minute
+sehat,healthy,indonesian;adjective,well / fine
+sakit,sick,indonesian;adjective,unwell / ill
+utama,main,indonesian;adjective,primary
+lama,long time,indonesian;adjective,old
+resmi,formal,indonesian;adjective,official 
+siap,ready,indonesian;adjective,prepared
+buka,open,indonesian;adjective,
+hilang,missing,indonesian;adjective,last / gone
+tutup,close,indonesian;adjective,closed
+sesuai,suitable,indonesian;adjective,appropriate / fits
+lembut,gentle,indonesian;adjective,soft / soft-hearted
+lebar,wide,indonesian;adjective,large
+sempit,tight,indonesian;adjective,cramped
+keras,hard,indonesian;adjective,though / loud
+berbahaya,dangerous ,indonesian;adjective,hazardous 
+laki laki,man,indonesian;family,
+perempuan,women,indonesian;family,
+ibu,mother,indonesian;family,
+ayah,father,indonesian;family,
+seorang,a,indonesian;noun,an
+anak,child,indonesian;family,son / kid
+orang tua,parents,indonesian;family,
+kakak,older siblings,indonesian;family,sister
+istri,wife,indonesian;family,
+suami,husband,indonesian;family,man
+adik,younger sibling,indonesian;family,
+keponakan,niece,indonesian;family,nephew
+pasangan,spouse,indonesian;family,pair / couple
+kakek,grandfather,indonesian;family,
+nenek,grandmother,indonesian;family,
+orang,person,indonesian;family,man / people
+meninggal,died,indonesian;verb,pass away
+cucu,grandchildren,indonesian;family,
+menikah,married,indonesian;family,
+sepupu,cousin,indonesian;family,

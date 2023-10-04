@@ -52,6 +52,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _toStatisticsPage() {
-    Navigator.pushNamed(context, "/statistics-page");
+    Navigator.pushNamed(context, "/stat-main-page");
   }
 }

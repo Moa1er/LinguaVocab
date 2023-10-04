@@ -55,7 +55,7 @@ class VocabListService with ChangeNotifier {
         }
       }
     } catch (e) {
-      print("Error reading file: $e");
+      print("Error reading wordList file in readVocabInFile(): $e");
     }
   }
 

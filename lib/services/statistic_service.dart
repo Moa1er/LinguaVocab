@@ -13,7 +13,7 @@ class StatisticService with ChangeNotifier {
     return _statisticService;
   }
 
-  StatisticService._internal() {}
+  StatisticService._internal();
 
   readStatsInFile() async{
     try {
@@ -24,18 +24,20 @@ class StatisticService with ChangeNotifier {
       for (String line in lines) {
         List<String> stat = line.split(',');
         int idxTags = 0;
-        int idxSuccessRate = 1;
-        int idxAvgTime = 2;
+        int idxTimeStamp = 1;
+        int idxSuccessRate = 2;
+        int idxAvgTime = 3;
         statsData.add(
             StatisticData(
               tags: stat[idxTags],
+              timestamp: int.parse(stat[idxTimeStamp]),
               successRate: double.parse(stat[idxSuccessRate]),
               avgRespTime: int.parse(stat[idxAvgTime]),
             )
         );
       }
     } catch (e) {
-      print("Error reading file: $e");
+      print("Error reading stat file in readStatsInFile(): $e");
     }
   }
 
@@ -45,7 +47,7 @@ class StatisticService with ChangeNotifier {
       tagsToWrite = selectedTags.join(";");
     }
 
-    StatisticData statData = StatisticData(tags: tagsToWrite, successRate: successRate, avgRespTime: avgRespTime);
+    StatisticData statData = StatisticData(tags: tagsToWrite, timestamp: DateTime.now().millisecondsSinceEpoch, successRate: successRate, avgRespTime: avgRespTime);
     saveStatisticsToFile(statData);
     statsData.add(statData);
   }

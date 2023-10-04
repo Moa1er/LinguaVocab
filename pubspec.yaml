@@ -33,6 +33,7 @@ dependencies:
     sdk: flutter
   path_provider: ^2.0.3
   permission_handler:
+  syncfusion_flutter_charts: ^23.1.38
 
 
   # The following adds the Cupertino Icons font to your application.

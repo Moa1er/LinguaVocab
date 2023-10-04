@@ -92,7 +92,7 @@ Future<void> writeVocabInFile(Word word) async{
     // Close the file
     await sink.close();
   } catch (e) {
-    print("Error reading file: $e");
+    print("Error reading wordList file in writeVocabInFile(): $e");
   }
 }
 
@@ -175,11 +175,11 @@ Future<void> saveStatisticsToFile(StatisticData statData) async {
   try {
     File file = File(globals.statisticsFilePath);
     IOSink sink = file.openWrite(mode: FileMode.append);
-    sink.writeln("${statData.tags},${statData.successRate},${statData.avgRespTime}");
+    sink.writeln("${statData.tags},${statData.timestamp},${statData.successRate},${statData.avgRespTime}");
 
     // Close the file
     await sink.close();
   } catch (e) {
-    print("Error reading file: $e");
+    print("Error reading wordList file in saveStatisticsToFile(): $e");
   }
 }

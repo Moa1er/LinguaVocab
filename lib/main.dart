@@ -1,7 +1,7 @@
 import 'package:vocab_language_tester/pages/adding_tag_page.dart';
 import 'package:vocab_language_tester/pages/home_page.dart';
 import 'package:vocab_language_tester/pages/add_vocab_page.dart';
-import 'package:vocab_language_tester/pages/statistics_page.dart';
+import 'package:vocab_language_tester/pages/stat_main_page.dart';
 import 'package:vocab_language_tester/pages/tag_selection_page.dart';
 import 'package:vocab_language_tester/pages/vocab_list_page.dart';
 import 'package:vocab_language_tester/pages/vocab_testing_page.dart';
@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         '/vocab-testing-page': (BuildContext context) => const VocabTestingPage(),
         '/adding-tag-page': (BuildContext context) => const AddingTagPage(),
         '/tag-selection-page': (BuildContext context) => const TagSelectionPage(),
-        '/statistics-page': (BuildContext context) => const StatisticsPage(),
+        '/stat-main-page': (BuildContext context) => const StatMainPage(),
       },
       home: const HomePage(),
     );
