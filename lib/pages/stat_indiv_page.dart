@@ -21,6 +21,12 @@ class _StatIndivPageState extends State<StatIndivPage> {
   // Variables to handle sorting
   bool _sortAscending = true;
 
+  final ZoomPanBehavior _zoomPanBehavior = ZoomPanBehavior(
+    enablePanning: true,
+    enablePinching: true,
+    zoomMode: ZoomMode.x,  // Here, we're enabling zooming only on the x-axis; you can adjust as needed
+  );
+
   void _onSort(int columnIndex, bool ascending) {
     setState(() {
       if (columnIndex == 0) {
@@ -66,12 +72,15 @@ class _StatIndivPageState extends State<StatIndivPage> {
               ),
             ),
             const SizedBox(height: 20),
-            // Adding the Syncfusion chart here:
             SfCartesianChart(
-              primaryXAxis: DateTimeAxis(),
+              zoomPanBehavior: _zoomPanBehavior,
+              primaryXAxis: CategoryAxis(
+                isVisible: false,
+              ),
+              // primaryXAxis: DateTimeAxis(),
               primaryYAxis: NumericAxis(
                 labelFormat: '{value}%',
-                title: AxisTitle(text: 'Success Rate & Avg Time'),
+                title: AxisTitle(text: 'Success Rate'),
                 minimum: 0,
                 maximum: 100,
                 labelStyle: const TextStyle(color: Colors.blue),
@@ -81,28 +90,33 @@ class _StatIndivPageState extends State<StatIndivPage> {
                   opposedPosition: true,
                   name: 'AvgTime',
                   labelFormat: '{value}ms',
+                  isInversed: true,
                   labelStyle: const TextStyle(color: Colors.red),
                 ),
               ],
               series: <ChartSeries>[
-                LineSeries<StatisticData, DateTime>(
+                LineSeries<StatisticData, String>(
+                // LineSeries<StatisticData, DateTime>(
                   name: 'Success Rate',
                   color: Colors.blue,
                   dataSource: dataForGivenTags,
-                  xValueMapper: (data, _) => DateTime.fromMillisecondsSinceEpoch(data.timestamp),
+                  // xValueMapper: (data, _) => DateTime.fromMillisecondsSinceEpoch(data.timestamp),
+                  xValueMapper: (data, _) => DateTime.fromMillisecondsSinceEpoch(data.timestamp).toString(),
                   yValueMapper: (data, _) => data.successRate,
                 ),
-                LineSeries<StatisticData, DateTime>(
+                LineSeries<StatisticData, String>(
+                // LineSeries<StatisticData, DateTime>(
                   name: 'Avg Time',
                   yAxisName: 'AvgTime',
                   color: Colors.red,
                   dataSource: dataForGivenTags,
-                  xValueMapper: (data, _) => DateTime.fromMillisecondsSinceEpoch(data.timestamp),
+                  // xValueMapper: (data, _) => DateTime.fromMillisecondsSinceEpoch(data.timestamp),
+                  xValueMapper: (data, _) => DateTime.fromMillisecondsSinceEpoch(data.timestamp).toString(),
                   yValueMapper: (data, _) => data.avgRespTime,
                 ),
               ],
             ),
-          DataTable(
+            DataTable(
               columnSpacing: 20,
               columns: [
                 DataColumn(
