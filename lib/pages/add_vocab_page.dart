@@ -27,7 +27,7 @@ class _AddVocabPageState extends State<AddVocabPage> {
 
   bool isTextOrSpace(String input) {
     //only letters and spaces accepted
-    final RegExp regex = RegExp(r'^[A-Za-z\s]+$');
+    final RegExp regex = RegExp(r'^[A-Za-z\s\uAC00-\uD7A3\u1100-\u11FF\u3130-\u318F]+$');
     return regex.hasMatch(input);
   }
 
