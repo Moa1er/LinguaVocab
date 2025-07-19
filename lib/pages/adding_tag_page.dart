@@ -18,7 +18,7 @@ class _AddingTagPageState extends State<AddingTagPage> {
   @override
   void initState() {
     super.initState();
-    filteredTags = List.from(vocabListService.existingTags);
+    filteredTags = List.from(vocabListService.existingTags)..sort();
   }
 
   void _onSearchTextChanged(String searchText) {

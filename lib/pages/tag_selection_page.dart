@@ -3,18 +3,24 @@ import 'package:flutter/material.dart';
 import '../services/vocab_list_service.dart';
 
 class TagSelectionPage extends StatefulWidget {
-  const TagSelectionPage({super.key});
+  const TagSelectionPage({
+    super.key,
+    this.initialSelectedTags = const [],
+  });
+  final List<String> initialSelectedTags;
 
   @override
   State<TagSelectionPage> createState() => _TagSelectionPageState();
 }
 
 class _TagSelectionPageState extends State<TagSelectionPage> {
-  List<String> selectedTags = [];
-  VocabListService vocabListService = VocabListService();
+  late final List<String> selectedTags = widget.initialSelectedTags;
+  final VocabListService vocabListService = VocabListService();
 
   @override
   Widget build(BuildContext context) {
+    final tags = vocabListService.existingTags.toList()..sort();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Select Tags'),
@@ -22,8 +28,7 @@ class _TagSelectionPageState extends State<TagSelectionPage> {
       body: ListView.builder(
         itemCount: vocabListService.existingTags.length,
         itemBuilder: (context, index) {
-          final tagList = vocabListService.existingTags.toList();
-          final tag = tagList[index];
+          final tag = tags[index];
           final isSelected = selectedTags.contains(tag);
 
           return ListTile(
@@ -45,8 +50,7 @@ class _TagSelectionPageState extends State<TagSelectionPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          vocabListService.createWordListForTest(selectedTags);
-          if(vocabListService.wordListForTest.isEmpty){
+          if(!vocabListService.doesFilteringHaveWords(selectedTags)){
             showDialog(
               context: context,
               builder: (context) {
@@ -66,6 +70,7 @@ class _TagSelectionPageState extends State<TagSelectionPage> {
               }
             );
           }else{
+            vocabListService.createWordListForTest(selectedTags);
             selectedTags.sort();
             Navigator.pop(context, selectedTags);
           }

@@ -1,6 +1,6 @@
-import 'package:vocab_language_tester/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:vocab_language_tester/classes/word.dart';
+import 'package:vocab_language_tester/pages/tag_selection_page.dart';
 import 'package:vocab_language_tester/services/vocab_list_service.dart';
 
 import 'add_vocab_page.dart';
@@ -15,26 +15,44 @@ class VocabListPage extends StatefulWidget {
 class _VocabListPageState extends State<VocabListPage> {
   VocabListService vocabListService = VocabListService();
 
+  List<String>? selectedTags; // List of tags to filter the word list
   String _searchQuery = ''; // Variable to store the search query
-  // Function to update the search query and rebuild the UI
-  void _updateSearchQuery(String query) {
-    setState(() {
-      _searchQuery = query.toLowerCase();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    // Filter the word list based on the search query
-    final filteredWordList = vocabListService.wordList.where((word) {
-      final foreignMatch = word.foreignVersion.toLowerCase().contains(_searchQuery);
-      final transMatch = word.transVersion.toLowerCase().contains(_searchQuery);
-      return foreignMatch || transMatch;
-    }).toList();
+    final q = _searchQuery.trim().toLowerCase();
+    final selectedSet = selectedTags?.map((t) => t.toLowerCase()).toSet();
+
+    bool matchesSearch(Word w) {
+      if (q.isEmpty) return true;            // No query → don’t restrict
+      return w.foreignVersion.toLowerCase().contains(q) ||
+            w.transVersion.toLowerCase().contains(q);
+    }
+
+    bool matchesTags(Word w) {
+      if (selectedSet == null || selectedSet.isEmpty) return true;
+      // Choose ONE of these semantics:
+      // A) Any overlap
+      // return w.tags.any((t) => selectedSet.contains(t.toLowerCase()));
+      // B) Word must contain ALL selected tags (subset test)
+      return selectedSet.every(
+        (neededTag) => w.tags.map((t) => t.toLowerCase()).contains(neededTag),
+      );
+    }
+
+    final filteredWordList = vocabListService.wordList
+        .where((w) => matchesSearch(w) && matchesTags(w)) // AND between filters
+        .toList();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Vocabulary List'),
+        actions: [
+          IconButton(
+            onPressed: _selectTags,
+            icon: const Icon(Icons.filter_list),
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -173,6 +191,29 @@ class _VocabListPageState extends State<VocabListPage> {
       },
     );
   }
+  
+  // Function to update the search query and rebuild the UI
+  void _updateSearchQuery(String query) {
+    setState(() {
+      _searchQuery = query.toLowerCase();
+    });
+  }
+
+  void _selectTags() {
+    Navigator.push<List<String>>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TagSelectionPage(initialSelectedTags: selectedTags ?? []),
+      ),
+    ).then((result) {
+      if (!mounted || result == null) return;
+      setState(() {
+        print("selectedTags: $result");
+        selectedTags = result;
+      });
+    }); 
+  }
+
 
   void _showDeleteConfirmationDialog(BuildContext context, Word wordToDel) {
     showDialog(

@@ -70,6 +70,14 @@ class VocabListService with ChangeNotifier {
     wordListForTest = wordList.where((word) => word.tags.every((tag) => selectedTags.contains(tag))).toList();
   }
 
+  bool doesFilteringHaveWords(List<String> selectedTags) {
+    if (selectedTags.isEmpty) return false;
+    final needed = selectedTags.toSet();
+    return wordList.any(
+      (w) => needed.every(w.tags.contains),
+    );
+  }
+
   void addReverseWord(){
     print("addReverseWord");
     List<Word> wordListForTestReversed = [];
