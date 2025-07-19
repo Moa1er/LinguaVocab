@@ -78,6 +78,13 @@ class VocabListService with ChangeNotifier {
     );
   }
 
+  bool isWordAlreadyInList(Word word) {
+    return wordList.any((word) => 
+      word.foreignVersion == word.foreignVersion.toLowerCase() 
+      && word.transVersion == word.transVersion.toLowerCase()
+    );
+  }
+
   void addReverseWord(){
     print("addReverseWord");
     List<Word> wordListForTestReversed = [];

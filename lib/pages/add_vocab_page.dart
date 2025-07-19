@@ -91,6 +91,17 @@ class _AddVocabPageState extends State<AddVocabPage> {
           description: description,
       );
 
+    if(vocabListService.isWordAlreadyInList(newWord)){
+      // Show an error snackbar if the input contains numbers or special characters.
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Word already in list."),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
     vocabListService.wordList.add(newWord);
     await writeVocabInFile(newWord);
 
