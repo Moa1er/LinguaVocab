@@ -14,9 +14,9 @@ class TagSelectionPage extends StatefulWidget {
 }
 
 class _TagSelectionPageState extends State<TagSelectionPage> {
-  late final List<String> selectedTags = widget.initialSelectedTags;
+  late List<String> selectedTags = [...widget.initialSelectedTags];
   final VocabListService vocabListService = VocabListService();
-
+  
   @override
   Widget build(BuildContext context) {
     final tags = vocabListService.existingTags.toList()..sort();

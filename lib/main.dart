@@ -40,6 +40,22 @@ class MyApp extends StatelessWidget {
           secondary: createMaterialColor(const Color(0xFFf5deb3)),
           tertiary: createMaterialColor(const Color(0xFF000000)),
         ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: createMaterialColor(const Color(0xFF0c483f)),
+            foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(6),
+            ),
+            // You can also set: padding, textStyle, minimumSize, etc.
+          ),
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: const TextStyle(color: Colors.black),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade700, width: 0.7),
+          ),
+        ),
       ),
       routes: <String, WidgetBuilder>{
         '/add-vocab-page': (BuildContext context) => AddVocabPage(wordPassed: Word(foreignVersion: "", transVersion: "", tags: {}, description: ""), fromVocabList: false),

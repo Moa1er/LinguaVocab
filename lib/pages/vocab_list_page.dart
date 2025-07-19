@@ -31,10 +31,6 @@ class _VocabListPageState extends State<VocabListPage> {
 
     bool matchesTags(Word w) {
       if (selectedSet == null || selectedSet.isEmpty) return true;
-      // Choose ONE of these semantics:
-      // A) Any overlap
-      // return w.tags.any((t) => selectedSet.contains(t.toLowerCase()));
-      // B) Word must contain ALL selected tags (subset test)
       return selectedSet.every(
         (neededTag) => w.tags.map((t) => t.toLowerCase()).contains(neededTag),
       );
@@ -62,9 +58,22 @@ class _VocabListPageState extends State<VocabListPage> {
               width: double.infinity, // Set the width to take the entire available space
               child: TextField(
                 onChanged: _updateSearchQuery,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Search...',
-                  border: OutlineInputBorder(),
+                  isDense: true,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: BorderSide(color: Colors.grey.shade700, width: 0.7),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: BorderSide(color: Colors.grey.shade700, width: 0.7),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(6),
+                    borderSide: const BorderSide(color: Colors.black, width: 1),
+                  ),
                 ),
               ),
             ),

@@ -151,8 +151,17 @@ class _AddVocabPageState extends State<AddVocabPage> {
           children: [
             TextField(
               controller: foreignWordController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Foreign word',
+                labelStyle: TextStyle(
+                  color: Colors.black,
+                ),
+                enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.grey.shade700,
+                  width: 0.5,
+                ),
+              ),
               ),
             ),
             const SizedBox(height: 16),
@@ -196,9 +205,8 @@ class _AddVocabPageState extends State<AddVocabPage> {
             ),
             const SizedBox(height: 24),
             ElevatedButton(
-                onPressed: _submitVocabulary,
-                child: Text(widget.fromVocabList ? "Modify word" : "Add new word"),
-            ),
+              onPressed: _submitVocabulary,
+              child: Text(widget.fromVocabList ? "Modify word" : "Add new word")            ),
           ],
         ),
       ),
