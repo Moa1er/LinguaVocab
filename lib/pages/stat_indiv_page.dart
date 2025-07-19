@@ -94,7 +94,7 @@ class _StatIndivPageState extends State<StatIndivPage> {
                   labelStyle: const TextStyle(color: Colors.red),
                 ),
               ],
-              series: <ChartSeries>[
+              series: <CartesianSeries>[
                 LineSeries<StatisticData, String>(
                 // LineSeries<StatisticData, DateTime>(
                   name: 'Success Rate',

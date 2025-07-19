@@ -10,13 +10,13 @@ class ElevatedBtnTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-          backgroundColor: MaterialStateColor.resolveWith(
+          backgroundColor: WidgetStateColor.resolveWith(
                   (states) => Theme.of(context).colorScheme.secondary),
-          padding: MaterialStateProperty.all(
+          padding: WidgetStateProperty.all(
             const EdgeInsets.symmetric(
                 vertical: 18.0, horizontal: 18.0),
           ),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          shape: WidgetStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)))
       ),
       onPressed: func,

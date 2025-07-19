@@ -136,7 +136,7 @@ class _VocabListPageState extends State<VocabListPage> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           height: MediaQuery.of(context).size.height * 0.1 + MediaQuery.of(context).size.height * 0.04 * (word.description.length / 76).ceil(), // Adjust the height as needed
           child: Column(
             children: [
