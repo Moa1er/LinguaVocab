@@ -78,10 +78,10 @@ class VocabListService with ChangeNotifier {
     );
   }
 
-  bool isWordAlreadyInList(Word word) {
+  bool isWordAlreadyInList(Word newWord) {
     return wordList.any((word) => 
-      word.foreignVersion == word.foreignVersion.toLowerCase() 
-      && word.transVersion == word.transVersion.toLowerCase()
+      word.foreignVersion == newWord.foreignVersion.toLowerCase() 
+      && word.transVersion == newWord.transVersion.toLowerCase()
     );
   }
 

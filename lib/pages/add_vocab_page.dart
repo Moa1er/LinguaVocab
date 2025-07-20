@@ -188,13 +188,22 @@ class _AddVocabPageState extends State<AddVocabPage> {
                   final tagList = vocabListService.tagsForChosenWord.toList();
                   final tag = tagList[index];
                   return Chip(
-                    label: Text(tag),
-                    deleteIcon: const Icon(Icons.clear),
+                    label: Text(
+                      tag,
+                      style: const TextStyle(
+                        color: Colors.white
+                      )
+                    ),
+                    deleteIcon: const Icon(
+                      Icons.clear,
+                      color: Colors.white
+                      ),
                     onDeleted: () {
                       setState(() {
                         vocabListService.tagsForChosenWord.remove(tag);
                       });
                     },
+                    backgroundColor: Theme.of(context).colorScheme.primary
                   );
                 },
               ),
